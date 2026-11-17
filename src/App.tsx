@@ -3,7 +3,7 @@ import { HeroSection } from "@/components/HeroSection"
 import { LoadingScreen } from "@/components/LoadingScreen"
 import { Balloons, BalloonsRef, launchResponsiveHappyBirthdayBalloons } from "@/components/ui/balloons"
 import { triggerConfettiBurst, triggerFireworks, triggerSideCannons } from "@/lib/confettiTriggers"
-import { Sparkles, Cake, Gift, Heart, ArrowUp, PartyPopper } from "lucide-react"
+import { Sparkles, Cake, Gift, Heart, ArrowUp, PartyPopper, Play } from "lucide-react"
 import confettiSfx from "@/assets/confetti.mp3"
 import wowSfx from "@/assets/random wow.mp3"
 import { sounds } from "./lib/soundEffects"
@@ -36,6 +36,7 @@ export function App() {
   const [activeTab, setActiveTab] = useState<"all" | "games" | "cake" | "confetti">("all")
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [isPageReady, setIsPageReady] = useState(false)
+  const [showSurpriseVideo, setShowSurpriseVideo] = useState(false)
 
   // Track initial page readiness (window load event or safety timer)
   useEffect(() => {
@@ -371,6 +372,52 @@ export function App() {
             >
               Grand Birthday Blast! 🎉🎈
             </button>
+          </div>
+        </section>
+
+        {/* Surprise video */}
+        <section id="surprise-video" className="scroll-mt-24">
+          <div className="rounded-3xl border-2 border-pink-200 bg-white/80 p-6 text-center shadow-xl shadow-pink-200/30 backdrop-blur sm:p-10">
+            <div className="mx-auto max-w-2xl space-y-5">
+              <div className="space-y-2">
+                <div className="text-4xl" aria-hidden="true">🎁</div>
+                <h2 className="text-2xl font-black text-slate-900 sm:text-3xl">
+                  A little birthday surprise
+                </h2>
+                <p className="text-sm text-slate-600 sm:text-base">
+                  There&apos;s something special waiting just for you.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowSurpriseVideo((isVisible) => !isVisible)}
+                aria-expanded={showSurpriseVideo}
+                aria-controls="birthday-surprise-player"
+                className="group mx-auto flex min-h-40 w-full max-w-xl flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-pink-300 bg-gradient-to-br from-pink-100 via-rose-50 to-purple-100 p-6 text-pink-800 transition hover:scale-[1.02] hover:border-pink-400 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-500"
+              >
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-pink-600 shadow-md transition group-hover:scale-110">
+                  <Play className="h-6 w-6 fill-current" aria-hidden="true" />
+                </span>
+                <span className="font-bold sm:text-lg">
+                  {showSurpriseVideo ? "Hide the surprise" : "Click me for a surprise"}
+                </span>
+              </button>
+              <div id="birthday-surprise-player" className="mt-4">
+                {showSurpriseVideo && (
+                  <video
+                    className="mx-auto aspect-video w-full max-w-2xl rounded-2xl bg-slate-950 shadow-lg"
+                    controls
+                    playsInline
+                    autoPlay
+                  >
+                    <source src="/rangoli.mp4" type="video/mp4" />
+                    Your browser does not support the video element.
+                  </video>
+                )}
+              </div>
+              
+            </div>
           </div>
         </section>
       </main>
